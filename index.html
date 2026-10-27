@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fair and Reasonable?</title>
+<meta name="description" content="Fair and Reasonable? Offers, expert valuations and deal protection in Australian takeovers and schemes. Version 0.1, 27 October 2026.">
+<link rel="icon" href="data:,">
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #6f6d68;
+  --grid: #e1e0d9; --axis: #c3c2b7; --ring: rgba(11,11,11,0.10); --wash: rgba(11,11,11,0.04);
+  --link: #1c5cab; --s1: #2a78d6; --s2: #eb6834;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #a3a29b;
+    --grid: #2c2c2a; --axis: #383835; --ring: rgba(255,255,255,0.10); --wash: rgba(255,255,255,0.05);
+    --link: #86b6ef; --s1: #3987e5; --s2: #d95926;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+main, header.top, footer { max-width: 920px; margin: 0 auto; padding: 0 16px; }
+header.top { padding-top: 32px; }
+h1 { font-size: 1.6rem; line-height: 1.25; margin: 0 0 12px; font-weight: 650; }
+h2 { font-size: 1.25rem; margin: 0 0 12px; font-weight: 650; }
+h3 { font-size: 1.05rem; margin: 20px 0 6px; font-weight: 650; }
+p { margin: 0 0 12px; }
+a { color: var(--link); }
+.meta { color: var(--ink-2); margin: 0 0 4px; }
+.notice { margin-top: 12px; padding: 10px 12px; border-left: 3px solid var(--axis); background: var(--surface); color: var(--ink-2); }
+nav.toc { margin: 20px 0 8px; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 0.95rem; }
+section { background: var(--surface); border: 1px solid var(--ring); border-radius: 8px; padding: 20px 16px; margin: 16px 0; }
+@media (min-width: 640px) { section { padding: 24px 28px; } }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+.tile { border: 1px solid var(--ring); border-radius: 8px; padding: 14px; }
+.tile-label { color: var(--ink-2); font-size: 0.92rem; margin-bottom: 6px; }
+.tile-value { font-size: 1.9rem; font-weight: 600; line-height: 1.2; }
+.tile-value-sm { font-size: 1.2rem; }
+.tile-n { color: var(--muted); font-size: 0.85rem; margin-top: 6px; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px 16px; margin: 0 0 12px; align-items: end; }
+.controls label { display: flex; flex-direction: column; font-size: 0.85rem; color: var(--ink-2); gap: 2px; }
+select, button { font: inherit; font-size: 0.95rem; color: var(--ink); background: var(--page);
+  border: 1px solid var(--axis); border-radius: 6px; padding: 6px 8px; }
+button { cursor: pointer; }
+button:hover, select:hover { background: var(--wash); }
+.hint { color: var(--muted); font-size: 0.88rem; }
+.tablewrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-top: 1px solid var(--grid); }
+table { border-collapse: collapse; width: 100%; font-size: 0.88rem; }
+th, td { text-align: left; padding: 8px 8px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+th { font-weight: 600; color: var(--ink-2); white-space: nowrap; }
+th button { border: 0; background: none; padding: 0; color: inherit; font-weight: 600; font-size: inherit; }
+th button::after { content: " \2195"; color: var(--muted); font-weight: 400; }
+th button[data-dir="asc"]::after { content: " \2191"; }
+th button[data-dir="desc"]::after { content: " \2193"; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tr.deal { cursor: pointer; }
+tr.deal:hover td { background: var(--wash); }
+tr.deal td:first-child button { border: 0; background: none; padding: 0; color: var(--link); text-align: left; text-decoration: underline; text-underline-offset: 2px; }
+tr.detail td { background: var(--page); padding: 12px; }
+.cites { width: 100%; font-size: 0.85rem; }
+.cites td, .cites th { padding: 4px 6px; }
+.small { font-size: 0.85rem; color: var(--ink-2); }
+.flag { color: var(--muted); font-size: 0.8rem; }
+#ff { width: 100%; }
+#ff svg { display: block; width: 100%; height: auto; overflow: visible; }
+#ff text { fill: var(--ink-2); font: 12px system-ui, -apple-system, "Segoe UI", sans-serif; }
+#ff .rowlab { fill: var(--ink); font-size: 13px; paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
+#ff .tick { fill: var(--muted); font-variant-numeric: tabular-nums; }
+#ff .grid { stroke: var(--grid); stroke-width: 1; }
+#ff .base { stroke: var(--axis); stroke-width: 1; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.85rem; color: var(--ink-2); margin: 6px 0 10px; }
+.key { display: inline-block; width: 14px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.key.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--ink); }
+ul.docs, ul.plain { padding-left: 20px; margin: 0 0 12px; }
+ul.docs li, ul.plain li { margin-bottom: 6px; }
+dl.defs dt { font-weight: 600; margin-top: 8px; }
+dl.defs dd { margin: 0 0 4px; }
+.cite { padding: 10px 12px; background: var(--page); border-radius: 6px; font-size: 0.92rem; }
+footer { color: var(--muted); font-size: 0.88rem; padding-bottom: 40px; }
+@media print {
+  :root { color-scheme: light; --page: #fff; --surface: #fff; --ink: #000; --ink-2: #333; --muted: #555;
+    --grid: #ddd; --axis: #bbb; --link: #000; --s1: #2a78d6; --s2: #eb6834; }
+  nav.toc, .controls, .hint, #download, #ffpick { display: none !important; }
+  section { border: 0; padding: 0; margin: 18px 0; break-inside: auto; }
+  .tablewrap { overflow: visible; }
+  a { text-decoration: none; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+<h1>Fair and Reasonable? Offers, expert valuations and deal protection in Australian takeovers and schemes</h1>
+<p class="meta">Luc Taya, Economics (Honours) graduate, University of Western Australia</p>
+<p class="meta">Version 0.1, 27 October 2026</p>
+<p class="notice">General information about completed transactions. Not financial product advice.</p>
+<nav class="toc" aria-label="Contents">
+<a href="#note">Note</a><a href="#key">Key numbers</a><a href="#deals">Deals</a><a href="#field">Football field</a><a href="#data">Data</a><a href="#methods">Methods and sources</a><a href="#corrections">Corrections</a>
+</nav>
+</header>
+<main>
+<section id="note" aria-labelledby="h-note">
+<h2 id="h-note">Note</h2>
+<h3>The question</h3>
+<p>When an ASX-listed company agrees to be acquired, an independent expert often reports on whether the offer is fair and reasonable. I wanted to see what those reports and the deal documents show across real deals. How large was the premium, and what was it measured against? Where did the final offer sit in the expert&#x27;s value range? How often was an offer not fair but reasonable, and why? And how do break fees compare with the Takeovers Panel&#x27;s 1% guideline?</p>
+<h3>The data</h3>
+<p>This pilot covers 10 of the largest completed ASX takeovers and schemes. Each was announced between 1 January 2024 and 31 March 2026 and resolved by 30 September 2026, had a scheme booklet or target&#x27;s statement with an independent expert&#x27;s report, and had an equity value of at least A$250m. Equity values run from A$2,815m to A$9,300m (n = 10). Eight are members&#x27; schemes, one is a stapled scheme and one is a takeover bid. Six offered cash and four offered scrip or a mix of cash and scrip. All 10 were implemented. It is not a census, and it is not a random sample.</p>
+<p>Every value comes from the deal documents and is cited to the page it appears on. A script checks formats and consistency rules, such as dates in order and fees against equity value. In a second pass, 82 values were re-read from images of the cited pages and 2 were corrected.</p>
+<h3>What I found</h3>
+<p><strong>Premia.</strong> The median stated premium to the one-month VWAP was 35.6% (n = 10), with a range of 0.3% to 51.9%. The reference point is the last trading day before the proposal first became public. Documents do not all measure premia the same way. In one deal the scrip part was valued at the bidder&#x27;s own VWAP over each window, and in another the expert printed premia as ranges, which I coded at their midpoints. The median stated premium was 33.3% to the close and 42.3% to the three-month VWAP (n = 10 each).</p>
+<p><strong>Where the offer sat in the expert&#x27;s range.</strong> I compare the value of the consideration that the expert assessed with the expert&#x27;s value range for the target, on a control basis. In 7 of 10 deals it sat inside the range, at a median of 0.76 of the way from the bottom to the top (n = 10). One offer sat below the range and none sat in its bottom quarter (n = 10). Two scrip offers, for De Grey Mining and Alumina, were valued above the top of the range (n = 10).</p>
+<p><strong>Opinions by consideration type.</strong> On the latest opinion before the vote or the close of the offer, experts found 9 of 10 offers fair and reasonable (n = 10). All 6 cash offers were fair and reasonable (n = 6). Of the 4 scrip or mixed offers, 3 were fair and reasonable and 1 was not fair but reasonable (n = 4, too few for shares). That one was Seven Group&#x27;s cash and scrip bid for Boral, which was also the one offer below the expert&#x27;s range. The expert&#x27;s first report found the bid not fair and not reasonable. After the bid was varied, later expert letters kept the view that it was not fair but found it reasonable. The expert&#x27;s stated reasons were the varied terms (cash payments no longer conditional, an optional buyback), franking credits for some holders, and that Seven Group had gained effective control of the Boral board and held almost 79% of Boral. A bidder already in control is a situation RG 111.14 lists for the reasonableness assessment. The expert did not give the minority basis for valuing scrip (RG 111.31) as a reason.</p>
+<p><strong>Break fees.</strong> All 8 target-payable break fees were within 0.05 percentage points of 1% of equity value (n = 8). GN7 para 48 says a fee of up to 1% of equity value is generally not unacceptable, and fn 35 measures equity value having regard to the bid consideration when announced. The documents stated the fee as a percentage in only 2 of the 8 deals; for the rest I divided the fee by equity value. Two deals had no break fee, Brickworks and Boral. Reverse fees, payable by the bidder, sit outside GN7 (para 4). Of the 9 deals with a coded reverse fee, 7 had one above zero (n = 9).</p>
+<h3>Limits</h3>
+<p>Selection comes first. The expert is appointed after the price is agreed, and a board rarely puts an offer below the expert&#x27;s range to a vote. A sample of completed deals will therefore show few below-range offers, whatever experts do. The sample covers only some of the largest deals, which may differ from mid-sized ones. Ten deals is a small number: the scrip or mixed group has four, so I report counts and not shares. Premium definitions and reference dates differ across documents, so stated premia do not compare exactly. All 10 deals were implemented, so the pilot says nothing about deals that failed.</p>
+<h3>Next</h3>
+<p>I will add more deals from the register, including those announced in early 2026, and the remaining fields in the codebook. These include the change from the first proposal to the final price, vote results, matching rights, and the expert&#x27;s cost of equity set against the 10-year Commonwealth bond yield.</p>
+</section>
+
+<section id="key" aria-labelledby="h-key">
+<h2 id="h-key">Key numbers</h2>
+<div class="tiles">
+<div class="tile"><div class="tile-label">Median stated premium to the 1-month VWAP</div><div class="tile-value">35.6%</div><div class="tile-n">n = 10</div></div>
+<div class="tile"><div class="tile-label">Offers below the expert&#x27;s range</div><div class="tile-value">1 of 10</div><div class="tile-n">In the bottom quarter of the range: 0 of 10</div></div>
+<div class="tile"><div class="tile-label">Not fair but reasonable opinions</div><div class="tile-value tile-value-sm">Cash: 0 of 6</div><div class="tile-value tile-value-sm">Scrip or mixed: 1 of 4</div><div class="tile-n">n = 10; groups under 5 show counts only</div></div>
+<div class="tile"><div class="tile-label">Break fees within 1.00 ± 0.05% of equity value</div><div class="tile-value">8 of 8</div><div class="tile-n">n = 8 deals with a break fee; 2 had none</div></div>
+</div>
+</section>
+
+<section id="deals" aria-labelledby="h-deals">
+<h2 id="h-deals">Deals</h2>
+<div class="controls" id="filters"></div>
+<p class="hint">Select a target to see every coded value with the document and page it comes from. <span id="shown"></span></p>
+<div class="tablewrap"><table id="dealtable"><thead></thead><tbody></tbody></table></div>
+<p class="small">FR: fair and reasonable. NFR: not fair but reasonable. NFNR: not fair and not reasonable. p places the consideration in the expert's range: 0 is the bottom, 1 is the top, below 0 is below the range.</p>
+</section>
+
+<section id="field" aria-labelledby="h-field">
+<h2 id="h-field">Football field</h2>
+<div class="controls"><label>Deal<select id="ffpick"></select></label></div>
+<div class="legend" aria-hidden="true">
+<span><span class="key" style="background:var(--s1)"></span>Expert's value of the target (control basis)</span>
+<span><span class="key" style="background:var(--s2)"></span>Expert's value of the consideration</span>
+<span><span class="key dot"></span>Final offer</span>
+</div>
+<div id="ff" role="img"></div>
+<h3>Citations</h3>
+<ul class="plain" id="ffcites"></ul>
+</section>
+
+<section id="data" aria-labelledby="h-data">
+<h2 id="h-data">Data</h2>
+<p>The download holds one line per coded field and deal: the value, its flags, the document code, the page and the document title. It is built in your browser from the data in this page.</p>
+<p><button id="download" type="button">Download CSV</button></p>
+</section>
+
+<section id="methods" aria-labelledby="h-methods">
+<h2 id="h-methods">Methods and sources</h2>
+<h3>Scope and sample</h3>
+<p>The scope is completed or failed takeovers and schemes for ASX-listed targets, announced from 1 January 2024 to 31 March 2026 and resolved by 30 September 2026, where the target issued a scheme booklet or target's statement with an independent expert's report, and the equity value was at least A$250m. Targets incorporated outside Australia whose deal ran under foreign law are out of scope. This version is a pilot of 10 of the largest deals in scope, announced 2024 to 2026, with equity values from A$2,815m to A$9,300m. It is not a census.</p>
+<h3>Fields in brief</h3>
+<dl class="defs">
+<dt>Final offer value</dt><dd>The value per target share put to the scheme vote or at the close of the bid, from the latest document. It includes cash, scrip at the price that document states, and any special dividend the documents count as part of the offer. It excludes franking credits.</dd>
+<dt>Stated premia</dt><dd>The premia printed in the premium table (from the expert's report where it has one) to the last close and the 1-month and 3-month VWAP.</dd>
+<dt>Expert's range</dt><dd>The expert's value of a target share on a control basis (100% of the target), low and high, and a preferred value where the expert states one.</dd>
+<dt>Expert's value of the consideration</dt><dd>The value of what holders receive that the expert compares with the range: the cash for cash deals and, for scrip, usually the expert's value of the bidder's shares as a minority interest.</dd>
+<dt>Opinion</dt><dd>The latest opinion before the vote or the close of the bid: FR, NFR or NFNR. For NFR, the reason the expert gave.</dd>
+<dt>Break fee</dt><dd>All fees payable by the target, added together, in A$m, and as a % of equity value. The reverse fee is payable by the bidder.</dd>
+</dl>
+<h3>Flags</h3>
+<p class="small">Flags shown beside a value:</p>
+<dl class="defs small">
+<dt>ABSENT</dt><dd>zero because the cited section lists none</dd>
+<dt>CONFLICT</dt><dd>documents disagree; the later document is used</dd>
+<dt>DERIVED</dt><dd>computed from printed figures, not printed itself; the page cited is that of the first input</dd>
+<dt>LOW_CONF</dt><dd>hard to read or measured on an unusual basis</dd>
+<dt>NA</dt><dd>does not apply</dd>
+<dt>NOT_FOUND</dt><dd>not in the documents</dd>
+<dt>OTHER_CONSIDERATION</dt><dd>contingent or deferred consideration left out of the offer value</dd>
+<dt>RANGE_MID</dt><dd>midpoint of a printed range</dd>
+<dt>UNIT</dt><dd>printed in cents and divided by 100, or converted from another currency</dd>
+<dt>WINDOW</dt><dd>VWAP window printed in days and counted as one or three months</dd>
+</dl>
+<h3>How premia are referenced and re-based</h3>
+<p>Premia are coded as printed. The reference date is the last trading day before the proposal first became public; a table struck to another date is flagged. A window of 20, 21 or 30 trading days (or 30 calendar days) counts as one month, and 60, 63 or 90 trading days (or 90 calendar days) as three months, with the window flagged. Documents often measure premia on an earlier or different offer value, so each premium is also re-based to the final offer: the reference price implied by the stated premium, set against the final offer value. The note and the key numbers use the stated premia.</p>
+<h3>Where the offer sits in the range</h3>
+<p>The consideration value is the midpoint of the expert's value of the consideration (or the single value). p is that value less the low end of the expert's range, divided by the width of the range. Position is below (p &lt; 0), in range (0 to 1) or above (p &gt; 1); for a zero-width range it is below, at or above. The bottom quarter is 0 &le; p &le; 0.25.</p>
+<h3>Checks</h3>
+<p>Every value is cited to the document and page it comes from (the printed page number, or the PDF page where none is printed), or flagged when the documents do not give it. A script checks formats and consistency rules: value ranges in order, the premium basis against the final offer, break fees against equity value, the opinion against the offer's position in the range, dates in order, equity value against shares and offer price, one citation per field, and scope. 82 values were re-read from images of the cited pages in a second pass and 2 were corrected. Values were extracted with the help of an AI model and checked with consistency rules.</p>
+<h3>Rules cited</h3>
+<ul class="plain">
+<li>ASIC Regulatory Guide 111, Content of expert reports (October 2020): RG 111.10 to 111.11 (fairness, on a 100% basis whether paid in cash or scrip); RG 111.12 to 111.17 (reasonableness, including 111.14 on a bidder already in control, 111.15 on distress and 111.16 on explaining a not fair but reasonable opinion); RG 111.18 to 111.22 (schemes and best interests); RG 111.30 to 111.34 (non-cash consideration, including 111.31 on valuing scrip as a minority interest).</li>
+<li>Takeovers Panel Guidance Note 7, Deal protection, Issue 5 (8 August 2023): para 4 (a break fee is payable by the target, so reverse fees fall outside it); para 48 (a fee of up to 1% of equity value is generally not unacceptable); para 50 (fees are added together); footnote 35 (equity value, having regard to the bid consideration when announced).</li>
+</ul>
+<h3>Documents cited</h3>
+<p class="small">Document codes: BK scheme booklet; TS target's statement; SUP supplementary booklet, statement or expert letter; BS bidder's statement; ANN announcement; OTH other.</p>
+<ul class="docs">
+<li><strong>Altium Limited</strong>: Scheme Booklet 5 June 2024 (BK); Implementation of Scheme of Arrangement 1 August 2024 (ANN)</li>
+<li><strong>Alumina Limited</strong>: Scheme Booklet 11 June 2024 (BK); Implementation of Scheme 1 August 2024 (ANN); Alcoa press release 11 March 2024 (OTH)</li>
+<li><strong>Boral Limited</strong>: Target&#x27;s Statement 19 March 2024 (TS); SGH Offer for Boral announcement 19 February 2024 (ANN); SGH notice of compulsory acquisition 30 May 2024 (ANN); Second Supplementary Target&#x27;s Statement 12 April 2024 (SUP); First Supplementary Target&#x27;s Statement 4 April 2024 (SUP)</li>
+<li><strong>Brickworks Limited</strong>: Combination Booklet 4 August 2025 (BK); Implementation of the SOL Share Scheme and BKW Share Scheme 23 September 2025 (ANN)</li>
+<li><strong>CSR Limited</strong>: Scheme Booklet 26 April 2024 (BK); Implementation of Scheme of Arrangement 9 July 2024 (ANN)</li>
+<li><strong>De Grey Mining Ltd</strong>: Scheme Booklet 11 March 2025 (BK); Northern Star announcement De Grey acquisition completes 5 May 2025 (ANN)</li>
+<li><strong>Domain Holdings Australia Limited</strong>: Scheme Booklet 30 June 2025 (BK); Implementation of scheme of arrangement 27 August 2025 (ANN)</li>
+<li><strong>Insignia Financial Ltd</strong>: Scheme Booklet 27 February 2026 (BK); Implementation of Scheme of Arrangement 28 April 2026 (ANN)</li>
+<li><strong>National Storage REIT</strong>: Scheme Booklet 10 March 2026 (BK); Implementation of Schemes 8 May 2026 (ANN)</li>
+<li><strong>Qube Holdings Limited</strong>: Scheme Booklet 23 April 2026 (BK); Implementation of Scheme 14 August 2026 (ANN)</li>
+</ul>
+<h3>Cite as</h3>
+<p class="cite">Taya, L. (2026). Fair and Reasonable? Offers, expert valuations and deal protection in Australian takeovers and schemes. Version 0.1, 27 October 2026. https://129313531343-bit.github.io/fair-and-reasonable/</p>
+<h3>Version history</h3>
+<ul class="plain">
+<li>0.1 (27 October 2026): pilot with 10 deals and 30 fields per deal.</li>
+</ul>
+</section>
+
+<section id="corrections" aria-labelledby="h-corr">
+<h2 id="h-corr">Corrections</h2>
+<p>If you find an error, please open an issue at <a href="https://github.com/129313531343-bit/fair-and-reasonable/issues">https://github.com/129313531343-bit/fair-and-reasonable/issues</a>.</p>
+</section>
+</main>
+<footer><p>General information about completed transactions. Not financial product advice.</p></footer>
+
+<script>
+"use strict";
+const DATA = {"deals":[{"deal_id":"ALU_2024","target_name":"Altium Limited","bidder_name":"Renesas Electronics Corporation","announce_date":"2024-02-15","structure":"members_scheme","consideration_type":"cash","outcome":"implemented","equity_value_aud_m":"9100.0","offer_value_aud":"68.50","prem_1m_pct":"38.6","val_low_aud":"62.37","val_pref_aud":"","val_high_aud":"70.27","cons_low_aud":"68.50","cons_high_aud":"68.50","offer_for_p":"68.5","p":"0.7759","position":"in_range","bottom_quarter":"N","range_overlap":"Y","opinion":"FR","break_fee_pct_used":"1.003","prem_1m_rb":"38.6"},{"deal_id":"CSR_2024","target_name":"CSR Limited","bidder_name":"Compagnie de Saint-Gobain","announce_date":"2024-02-26","structure":"members_scheme","consideration_type":"cash","outcome":"implemented","equity_value_aud_m":"4319.0","offer_value_aud":"9.00","prem_1m_pct":"32.6","val_low_aud":"8.25","val_pref_aud":"","val_high_aud":"9.26","cons_low_aud":"9.00","cons_high_aud":"9.00","offer_for_p":"9","p":"0.7426","position":"in_range","bottom_quarter":"N","range_overlap":"Y","opinion":"FR","break_fee_pct_used":"1","prem_1m_rb":"32.6"},{"deal_id":"QUB_2026","target_name":"Qube Holdings Limited","bidder_name":"MAM Consortium (Macquarie Asset Management; UniSuper; Pontegadea)","announce_date":"2026-02-16","structure":"members_scheme","consideration_type":"cash","outcome":"implemented","equity_value_aud_m":"9300.0","offer_value_aud":"5.20","prem_1m_pct":"21","val_low_aud":"4.93","val_pref_aud":"","val_high_aud":"5.41","cons_low_aud":"5.20","cons_high_aud":"5.20","offer_for_p":"5.2","p":"0.5625","position":"in_range","bottom_quarter":"N","range_overlap":"Y","opinion":"FR","break_fee_pct_used":"1","prem_1m_rb":"21"},{"deal_id":"DEG_2024","target_name":"De Grey Mining Ltd","bidder_name":"Northern Star Resources Ltd","announce_date":"2024-12-02","structure":"members_scheme","consideration_type":"scrip","outcome":"implemented","equity_value_aud_m":"5000.0","offer_value_aud":"2.08","prem_1m_pct":"43.49","val_low_aud":"1.68","val_pref_aud":"","val_high_aud":"1.99","cons_low_aud":"1.92","cons_high_aud":"2.08","offer_for_p":"2","p":"1.0323","position":"above","bottom_quarter":"N","range_overlap":"Y","opinion":"FR","break_fee_pct_used":"1","prem_1m_rb":"43.49"},{"deal_id":"BKW_2025","target_name":"Brickworks Limited","bidder_name":"Washington H. Soul Pattinson and Company Limited (Topco; formerly First Services Company Ltd)","announce_date":"2025-06-02","structure":"members_scheme","consideration_type":"scrip","outcome":"implemented","equity_value_aud_m":"4631.2","offer_value_aud":"33.28","prem_1m_pct":"11.9","val_low_aud":"30.25","val_pref_aud":"","val_high_aud":"34.26","cons_low_aud":"31.98","cons_high_aud":"36.08","offer_for_p":"34.03","p":"0.9426","position":"in_range","bottom_quarter":"N","range_overlap":"Y","opinion":"FR","break_fee_pct_used":"","prem_1m_rb":"22.99"},{"deal_id":"BLD_2024","target_name":"Boral Limited","bidder_name":"Seven Group Holdings Limited","announce_date":"2024-02-19","structure":"takeover","consideration_type":"mixed","outcome":"implemented","equity_value_aud_m":"6673.7","offer_value_aud":"6.17","prem_1m_pct":"0.3","val_low_aud":"6.42","val_pref_aud":"","val_high_aud":"7.05","cons_low_aud":"6.16","cons_high_aud":"6.39","offer_for_p":"6.275","p":"-0.2302","position":"below","bottom_quarter":"N","range_overlap":"N","opinion":"NFR","break_fee_pct_used":"","prem_1m_rb":"2.29"},{"deal_id":"NSR_2025","target_name":"National Storage REIT","bidder_name":"Brookfield Asset Management Ltd and GIC (Consortium)","announce_date":"2025-12-08","structure":"stapled_scheme","consideration_type":"cash","outcome":"implemented","equity_value_aud_m":"4000.0","offer_value_aud":"2.86","prem_1m_pct":"22.4","val_low_aud":"2.72","val_pref_aud":"","val_high_aud":"2.86","cons_low_aud":"2.80","cons_high_aud":"2.80","offer_for_p":"2.8","p":"0.5714","position":"in_range","bottom_quarter":"N","range_overlap":"Y","opinion":"FR","break_fee_pct_used":"1","prem_1m_rb":"25.02"},{"deal_id":"AWC_2024","target_name":"Alumina Limited","bidder_name":"Alcoa Corporation","announce_date":"2024-03-12","structure":"members_scheme","consideration_type":"scrip","outcome":"implemented","equity_value_aud_m":"3353.7","offer_value_aud":"1.90","prem_1m_pct":"41.0","val_low_aud":"1.26","val_pref_aud":"","val_high_aud":"1.51","cons_low_aud":"1.45","cons_high_aud":"1.62","offer_for_p":"1.535","p":"1.1","position":"above","bottom_quarter":"N","range_overlap":"Y","opinion":"FR","break_fee_pct_used":"1","prem_1m_rb":"74.53"},{"deal_id":"IFL_2025","target_name":"Insignia Financial Ltd","bidder_name":"CC Capital Partners LLC","announce_date":"2025-07-22","structure":"members_scheme","consideration_type":"cash","outcome":"implemented","equity_value_aud_m":"3256.7","offer_value_aud":"4.80","prem_1m_pct":"51.9","val_low_aud":"4.49","val_pref_aud":"","val_high_aud":"5.08","cons_low_aud":"4.80","cons_high_aud":"4.80","offer_for_p":"4.8","p":"0.5254","position":"in_range","bottom_quarter":"N","range_overlap":"Y","opinion":"FR","break_fee_pct_used":"1.001","prem_1m_rb":"51.9"},{"deal_id":"DHG_2025","target_name":"Domain Holdings Australia Limited","bidder_name":"CoStar Group Inc","announce_date":"2025-05-09","structure":"members_scheme","consideration_type":"cash","outcome":"implemented","equity_value_aud_m":"2815.3","offer_value_aud":"4.43","prem_1m_pct":"50.2","val_low_aud":"4.06","val_pref_aud":"","val_high_aud":"4.46","cons_low_aud":"4.43","cons_high_aud":"4.43","offer_for_p":"4.43","p":"0.925","position":"in_range","bottom_quarter":"N","range_overlap":"Y","opinion":"FR","break_fee_pct_used":"0.998","prem_1m_rb":"50.2"}],"cites":[["ALU_2024","target_name","Altium Limited","","BK","pdf 5","Scheme Booklet 5 June 2024"],["ALU_2024","target_ticker","ALU","","BK","31","Scheme Booklet 5 June 2024"],["ALU_2024","bidder_name","Renesas Electronics Corporation","","BK","pdf 5","Scheme Booklet 5 June 2024"],["ALU_2024","structure","members_scheme","","BK","5","Scheme Booklet 5 June 2024"],["ALU_2024","consideration_type","cash","","BK","10","Scheme Booklet 5 June 2024"],["ALU_2024","bidder_type","trade_foreign","","BK","40","Scheme Booklet 5 June 2024"],["ALU_2024","announce_date","2024-02-15","","BK","5","Scheme Booklet 5 June 2024"],["ALU_2024","outcome","implemented","","ANN","1","Implementation of Scheme of Arrangement 1 August 2024"],["ALU_2024","equity_value_aud_m","9100.0","","BK","5","Scheme Booklet 5 June 2024"],["ALU_2024","offer_value_aud","68.50","","BK","70","Scheme Booklet 5 June 2024"],["ALU_2024","special_div_aud","0","ABSENT","BK","20","Scheme Booklet 5 June 2024"],["ALU_2024","prem_ref_date","2024-02-14","","BK","74","Scheme Booklet 5 June 2024"],["ALU_2024","prem_close_pct","33.6","","BK","74","Scheme Booklet 5 June 2024"],["ALU_2024","prem_1m_pct","38.6","","BK","74","Scheme Booklet 5 June 2024"],["ALU_2024","prem_3m_pct","45.5","","BK","74","Scheme Booklet 5 June 2024"],["ALU_2024","prem_offer_basis_aud","68.50","","BK","74","Scheme Booklet 5 June 2024"],["ALU_2024","prem_source","IER","","BK","74","Scheme Booklet 5 June 2024"],["ALU_2024","ier_present","Y","","BK","67","Scheme Booklet 5 June 2024"],["ALU_2024","expert_firm","Kroll Australia Pty Ltd","","BK","67","Scheme Booklet 5 June 2024"],["ALU_2024","ier_method","multiple","","BK","71","Scheme Booklet 5 June 2024"],["ALU_2024","val_low_aud","62.37","","BK","70","Scheme Booklet 5 June 2024"],["ALU_2024","val_pref_aud","","NA","","",""],["ALU_2024","val_high_aud","70.27","","BK","70","Scheme Booklet 5 June 2024"],["ALU_2024","cons_low_aud","68.50","","BK","70","Scheme Booklet 5 June 2024"],["ALU_2024","cons_high_aud","68.50","","BK","70","Scheme Booklet 5 June 2024"],["ALU_2024","opinion","FR","","BK","70","Scheme Booklet 5 June 2024"],["ALU_2024","nfr_reason","","NA","","",""],["ALU_2024","break_fee_aud_m","91.300","","BK","77","Scheme Booklet 5 June 2024"],["ALU_2024","break_fee_pct_stated","","NOT_FOUND","","",""],["ALU_2024","reverse_fee_aud_m","410.800","","BK","77","Scheme Booklet 5 June 2024"],["CSR_2024","target_name","CSR Limited","","BK","pdf 3","Scheme Booklet 26 April 2024"],["CSR_2024","target_ticker","CSR","","BK","166","Scheme Booklet 26 April 2024"],["CSR_2024","bidder_name","Compagnie de Saint-Gobain","","BK","2","Scheme Booklet 26 April 2024"],["CSR_2024","structure","members_scheme","","BK","2","Scheme Booklet 26 April 2024"],["CSR_2024","consideration_type","cash","","BK","2","Scheme Booklet 26 April 2024"],["CSR_2024","bidder_type","trade_foreign","","BK","62","Scheme Booklet 26 April 2024"],["CSR_2024","announce_date","2024-02-26","","BK","2","Scheme Booklet 26 April 2024"],["CSR_2024","outcome","implemented","","ANN","1","Implementation of Scheme of Arrangement 9 July 2024"],["CSR_2024","equity_value_aud_m","4319.0","","BK","3","Scheme Booklet 26 April 2024"],["CSR_2024","offer_value_aud","9.00","OTHER_CONSIDERATION","BK","115","Scheme Booklet 26 April 2024"],["CSR_2024","special_div_aud","0.12","","BK","3","Scheme Booklet 26 April 2024"],["CSR_2024","prem_ref_date","2024-02-20","","BK","119","Scheme Booklet 26 April 2024"],["CSR_2024","prem_close_pct","32.9","","BK","119","Scheme Booklet 26 April 2024"],["CSR_2024","prem_1m_pct","32.6","","BK","119","Scheme Booklet 26 April 2024"],["CSR_2024","prem_3m_pct","39.1","","BK","119","Scheme Booklet 26 April 2024"],["CSR_2024","prem_offer_basis_aud","9.00","","BK","119","Scheme Booklet 26 April 2024"],["CSR_2024","prem_source","IER","","BK","119","Scheme Booklet 26 April 2024"],["CSR_2024","ier_present","Y","","BK","111","Scheme Booklet 26 April 2024"],["CSR_2024","expert_firm","Kroll Australia Pty Ltd","","BK","112","Scheme Booklet 26 April 2024"],["CSR_2024","ier_method","nav_sotp","","BK","116","Scheme Booklet 26 April 2024"],["CSR_2024","val_low_aud","8.25","","BK","115","Scheme Booklet 26 April 2024"],["CSR_2024","val_pref_aud","","NA","","",""],["CSR_2024","val_high_aud","9.26","","BK","115","Scheme Booklet 26 April 2024"],["CSR_2024","cons_low_aud","9.00","","BK","115","Scheme Booklet 26 April 2024"],["CSR_2024","cons_high_aud","9.00","","BK","115","Scheme Booklet 26 April 2024"],["CSR_2024","opinion","FR","","BK","115","Scheme Booklet 26 April 2024"],["CSR_2024","nfr_reason","","NA","","",""],["CSR_2024","break_fee_aud_m","42.000","","BK","89","Scheme Booklet 26 April 2024"],["CSR_2024","break_fee_pct_stated","1","","BK","89","Scheme Booklet 26 April 2024"],["CSR_2024","reverse_fee_aud_m","42.000","","BK","89","Scheme Booklet 26 April 2024"],["QUB_2026","target_name","Qube Holdings Limited","","BK","i","Scheme Booklet 23 April 2026"],["QUB_2026","target_ticker","QUB","","BK","261","Scheme Booklet 23 April 2026"],["QUB_2026","bidder_name","MAM Consortium (Macquarie Asset Management; UniSuper; Pontegadea)","","BK","91","Scheme Booklet 23 April 2026"],["QUB_2026","structure","members_scheme","","BK","91","Scheme Booklet 23 April 2026"],["QUB_2026","consideration_type","cash","","BK","91","Scheme Booklet 23 April 2026"],["QUB_2026","bidder_type","pe_infra","","BK","47","Scheme Booklet 23 April 2026"],["QUB_2026","announce_date","2026-02-16","","BK","91","Scheme Booklet 23 April 2026"],["QUB_2026","outcome","implemented","","ANN","1","Implementation of Scheme 14 August 2026"],["QUB_2026","equity_value_aud_m","9300.0","","BK","4","Scheme Booklet 23 April 2026"],["QUB_2026","offer_value_aud","5.20","","BK","97","Scheme Booklet 23 April 2026"],["QUB_2026","special_div_aud","0.40","","ANN","1","Implementation of Scheme 14 August 2026"],["QUB_2026","prem_ref_date","2025-11-21","","BK","98","Scheme Booklet 23 April 2026"],["QUB_2026","prem_close_pct","28","","BK","98","Scheme Booklet 23 April 2026"],["QUB_2026","prem_1m_pct","21","","BK","98","Scheme Booklet 23 April 2026"],["QUB_2026","prem_3m_pct","24","","BK","98","Scheme Booklet 23 April 2026"],["QUB_2026","prem_offer_basis_aud","5.20","","BK","97","Scheme Booklet 23 April 2026"],["QUB_2026","prem_source","IER","","BK","98","Scheme Booklet 23 April 2026"],["QUB_2026","ier_present","Y","","BK","91","Scheme Booklet 23 April 2026"],["QUB_2026","expert_firm","Grant Samuel & Associates Pty Limited","","BK","91","Scheme Booklet 23 April 2026"],["QUB_2026","ier_method","nav_sotp","","BK","168","Scheme Booklet 23 April 2026"],["QUB_2026","val_low_aud","4.93","","BK","92","Scheme Booklet 23 April 2026"],["QUB_2026","val_pref_aud","","NA","","",""],["QUB_2026","val_high_aud","5.41","","BK","92","Scheme Booklet 23 April 2026"],["QUB_2026","cons_low_aud","5.20","","BK","97","Scheme Booklet 23 April 2026"],["QUB_2026","cons_high_aud","5.20","","BK","97","Scheme Booklet 23 April 2026"],["QUB_2026","opinion","FR","","BK","92","Scheme Booklet 23 April 2026"],["QUB_2026","nfr_reason","","NA","","",""],["QUB_2026","break_fee_aud_m","92.346","","BK","68","Scheme Booklet 23 April 2026"],["QUB_2026","break_fee_pct_stated","1","","BK","68","Scheme Booklet 23 April 2026"],["QUB_2026","reverse_fee_aud_m","0","ABSENT","BK","68","Scheme Booklet 23 April 2026"],["DEG_2024","target_name","De Grey Mining Ltd","","BK","pdf 4","Scheme Booklet 11 March 2025"],["DEG_2024","target_ticker","DEG","","BK","34","Scheme Booklet 11 March 2025"],["DEG_2024","bidder_name","Northern Star Resources Ltd","","BK","54","Scheme Booklet 11 March 2025"],["DEG_2024","structure","members_scheme","","BK","pdf 139","Scheme Booklet 11 March 2025"],["DEG_2024","consideration_type","scrip","","BK","pdf 139","Scheme Booklet 11 March 2025"],["DEG_2024","bidder_type","trade_domestic","","BK","54","Scheme Booklet 11 March 2025"],["DEG_2024","announce_date","2024-12-02","","BK","pdf 139","Scheme Booklet 11 March 2025"],["DEG_2024","outcome","implemented","","ANN","pdf 1","Northern Star announcement De Grey acquisition completes 5 May 2025"],["DEG_2024","equity_value_aud_m","5000.0","","BK","8","Scheme Booklet 11 March 2025"],["DEG_2024","offer_value_aud","2.08","","BK","8","Scheme Booklet 11 March 2025"],["DEG_2024","special_div_aud","0","ABSENT","BK","27","Scheme Booklet 11 March 2025"],["DEG_2024","prem_ref_date","2024-11-29","","BK","pdf 151","Scheme Booklet 11 March 2025"],["DEG_2024","prem_close_pct","37.36","WINDOW","BK","pdf 151","Scheme Booklet 11 March 2025"],["DEG_2024","prem_1m_pct","43.49","","BK","pdf 151","Scheme Booklet 11 March 2025"],["DEG_2024","prem_3m_pct","53.50","","BK","pdf 151","Scheme Booklet 11 March 2025"],["DEG_2024","prem_offer_basis_aud","2.08","","BK","pdf 151","Scheme Booklet 11 March 2025"],["DEG_2024","prem_source","IER","","BK","pdf 151","Scheme Booklet 11 March 2025"],["DEG_2024","ier_present","Y","","BK","135","Scheme Booklet 11 March 2025"],["DEG_2024","expert_firm","KPMG Financial Advisory Services (Australia) Pty Ltd","","BK","pdf 139","Scheme Booklet 11 March 2025"],["DEG_2024","ier_method","nav_sotp","","BK","pdf 142","Scheme Booklet 11 March 2025"],["DEG_2024","val_low_aud","1.68","","BK","pdf 142","Scheme Booklet 11 March 2025"],["DEG_2024","val_pref_aud","","NA","","",""],["DEG_2024","val_high_aud","1.99","","BK","pdf 142","Scheme Booklet 11 March 2025"],["DEG_2024","cons_low_aud","1.92","","BK","pdf 143","Scheme Booklet 11 March 2025"],["DEG_2024","cons_high_aud","2.08","","BK","pdf 143","Scheme Booklet 11 March 2025"],["DEG_2024","opinion","FR","","BK","pdf 142","Scheme Booklet 11 March 2025"],["DEG_2024","nfr_reason","","NA","","",""],["DEG_2024","break_fee_aud_m","50.000","","BK","115","Scheme Booklet 11 March 2025"],["DEG_2024","break_fee_pct_stated","","NOT_FOUND","","",""],["DEG_2024","reverse_fee_aud_m","100.000","","BK","116","Scheme Booklet 11 March 2025"],["BKW_2025","target_name","Brickworks Limited","","BK","pdf 4","Combination Booklet 4 August 2025"],["BKW_2025","target_ticker","BKW","","BK","264","Combination Booklet 4 August 2025"],["BKW_2025","bidder_name","Washington H. Soul Pattinson and Company Limited (Topco; formerly First Services Company Ltd)","","BK","3","Combination Booklet 4 August 2025"],["BKW_2025","structure","members_scheme","","BK","3","Combination Booklet 4 August 2025"],["BKW_2025","consideration_type","scrip","","BK","3","Combination Booklet 4 August 2025"],["BKW_2025","bidder_type","trade_domestic","","BK","3","Combination Booklet 4 August 2025"],["BKW_2025","announce_date","2025-06-02","","BK","3","Combination Booklet 4 August 2025"],["BKW_2025","outcome","implemented","","ANN","1","Implementation of the SOL Share Scheme and BKW Share Scheme 23 September 2025"],["BKW_2025","equity_value_aud_m","4631.2","DERIVED","BK","82","Combination Booklet 4 August 2025"],["BKW_2025","offer_value_aud","33.28","","BK","4","Combination Booklet 4 August 2025"],["BKW_2025","special_div_aud","0","ABSENT","BK","5","Combination Booklet 4 August 2025"],["BKW_2025","prem_ref_date","2025-05-30","","BK","4","Combination Booklet 4 August 2025"],["BKW_2025","prem_close_pct","10.1","","BK","4","Combination Booklet 4 August 2025"],["BKW_2025","prem_1m_pct","11.9","","BK","4","Combination Booklet 4 August 2025"],["BKW_2025","prem_3m_pct","21.9","","BK","4","Combination Booklet 4 August 2025"],["BKW_2025","prem_offer_basis_aud","30.28","","BK","3","Combination Booklet 4 August 2025"],["BKW_2025","prem_source","BK","","BK","4","Combination Booklet 4 August 2025"],["BKW_2025","ier_present","Y","","BK","197","Combination Booklet 4 August 2025"],["BKW_2025","expert_firm","Kroll Australia Pty Ltd","","BK","5","Combination Booklet 4 August 2025"],["BKW_2025","ier_method","nav_sotp","","BK","203","Combination Booklet 4 August 2025"],["BKW_2025","val_low_aud","30.25","","BK","201","Combination Booklet 4 August 2025"],["BKW_2025","val_pref_aud","","NA","","",""],["BKW_2025","val_high_aud","34.26","","BK","201","Combination Booklet 4 August 2025"],["BKW_2025","cons_low_aud","31.98","","BK","201","Combination Booklet 4 August 2025"],["BKW_2025","cons_high_aud","36.08","","BK","201","Combination Booklet 4 August 2025"],["BKW_2025","opinion","FR","","BK","201","Combination Booklet 4 August 2025"],["BKW_2025","nfr_reason","","NA","","",""],["BKW_2025","break_fee_aud_m","","NA","","",""],["BKW_2025","break_fee_pct_stated","","NA","","",""],["BKW_2025","reverse_fee_aud_m","0","ABSENT","BK","61","Combination Booklet 4 August 2025"],["BLD_2024","target_name","Boral Limited","","TS","pdf 2","Target's Statement 19 March 2024"],["BLD_2024","target_ticker","BLD","","TS","pdf 3","Target's Statement 19 March 2024"],["BLD_2024","bidder_name","Seven Group Holdings Limited","","TS","34","Target's Statement 19 March 2024"],["BLD_2024","structure","takeover","","TS","pdf 65","Target's Statement 19 March 2024"],["BLD_2024","consideration_type","mixed","","TS","3","Target's Statement 19 March 2024"],["BLD_2024","bidder_type","trade_domestic","","TS","34","Target's Statement 19 March 2024"],["BLD_2024","announce_date","2024-02-19","","ANN","pdf 1","SGH Offer for Boral announcement 19 February 2024"],["BLD_2024","outcome","implemented","","ANN","pdf 2","SGH notice of compulsory acquisition 30 May 2024"],["BLD_2024","equity_value_aud_m","6673.7","DERIVED","TS","32","Target's Statement 19 March 2024"],["BLD_2024","offer_value_aud","6.17","","SUP","pdf 11","Second Supplementary Target's Statement 12 April 2024"],["BLD_2024","special_div_aud","0.26","","SUP","pdf 3","Second Supplementary Target's Statement 12 April 2024"],["BLD_2024","prem_ref_date","2024-02-16","CONFLICT","TS","8","Target's Statement 19 March 2024"],["BLD_2024","prem_close_pct","3.4","","TS","8","Target's Statement 19 March 2024"],["BLD_2024","prem_1m_pct","0.3","LOW_CONF","TS","8","Target's Statement 19 March 2024"],["BLD_2024","prem_3m_pct","1.6","LOW_CONF","TS","8","Target's Statement 19 March 2024"],["BLD_2024","prem_offer_basis_aud","6.05","LOW_CONF","ANN","pdf 1","SGH Offer for Boral announcement 19 February 2024"],["BLD_2024","prem_source","TS","","TS","8","Target's Statement 19 March 2024"],["BLD_2024","ier_present","Y","","TS","61","Target's Statement 19 March 2024"],["BLD_2024","expert_firm","Grant Samuel & Associates Pty Limited","","TS","pdf 65","Target's Statement 19 March 2024"],["BLD_2024","ier_method","other","","TS","pdf 66","Target's Statement 19 March 2024"],["BLD_2024","val_low_aud","6.42","","SUP","pdf 6","First Supplementary Target's Statement 4 April 2024"],["BLD_2024","val_pref_aud","","NA","","",""],["BLD_2024","val_high_aud","7.05","","SUP","pdf 6","First Supplementary Target's Statement 4 April 2024"],["BLD_2024","cons_low_aud","6.16","","SUP","pdf 10","Second Supplementary Target's Statement 12 April 2024"],["BLD_2024","cons_high_aud","6.39","","SUP","pdf 10","Second Supplementary Target's Statement 12 April 2024"],["BLD_2024","opinion","NFR","","SUP","pdf 10","Second Supplementary Target's Statement 12 April 2024"],["BLD_2024","nfr_reason","controlling_bidder","","SUP","pdf 11","Second Supplementary Target's Statement 12 April 2024"],["BLD_2024","break_fee_aud_m","","NA","","",""],["BLD_2024","break_fee_pct_stated","","NA","","",""],["BLD_2024","reverse_fee_aud_m","","NA","","",""],["NSR_2025","target_name","National Storage REIT","","BK","pdf 5","Scheme Booklet 10 March 2026"],["NSR_2025","target_ticker","NSR","","BK","pdf 1","Scheme Booklet 10 March 2026"],["NSR_2025","bidder_name","Brookfield Asset Management Ltd and GIC (Consortium)","","BK","134","Scheme Booklet 10 March 2026"],["NSR_2025","structure","stapled_scheme","","BK","134","Scheme Booklet 10 March 2026"],["NSR_2025","consideration_type","cash","","BK","10","Scheme Booklet 10 March 2026"],["NSR_2025","bidder_type","pe_infra","","BK","135","Scheme Booklet 10 March 2026"],["NSR_2025","announce_date","2025-12-08","","BK","134","Scheme Booklet 10 March 2026"],["NSR_2025","outcome","implemented","","ANN","1","Implementation of Schemes 8 May 2026"],["NSR_2025","equity_value_aud_m","4000.0","","BK","10","Scheme Booklet 10 March 2026"],["NSR_2025","offer_value_aud","2.86","","BK","10","Scheme Booklet 10 March 2026"],["NSR_2025","special_div_aud","0.06","LOW_CONF","BK","10","Scheme Booklet 10 March 2026"],["NSR_2025","prem_ref_date","2025-11-25","","BK","142","Scheme Booklet 10 March 2026"],["NSR_2025","prem_close_pct","23.9","","BK","142","Scheme Booklet 10 March 2026"],["NSR_2025","prem_1m_pct","22.4","","BK","142","Scheme Booklet 10 March 2026"],["NSR_2025","prem_3m_pct","19.1","","BK","142","Scheme Booklet 10 March 2026"],["NSR_2025","prem_offer_basis_aud","2.80","","BK","142","Scheme Booklet 10 March 2026"],["NSR_2025","prem_source","IER","","BK","142","Scheme Booklet 10 March 2026"],["NSR_2025","ier_present","Y","","BK","133","Scheme Booklet 10 March 2026"],["NSR_2025","expert_firm","Kroll Australia Pty Ltd","","BK","134","Scheme Booklet 10 March 2026"],["NSR_2025","ier_method","nav_sotp","","BK","139","Scheme Booklet 10 March 2026"],["NSR_2025","val_low_aud","2.72","","BK","138","Scheme Booklet 10 March 2026"],["NSR_2025","val_pref_aud","","NA","","",""],["NSR_2025","val_high_aud","2.86","","BK","138","Scheme Booklet 10 March 2026"],["NSR_2025","cons_low_aud","2.80","","BK","141","Scheme Booklet 10 March 2026"],["NSR_2025","cons_high_aud","2.80","","BK","141","Scheme Booklet 10 March 2026"],["NSR_2025","opinion","FR","","BK","138","Scheme Booklet 10 March 2026"],["NSR_2025","nfr_reason","","NA","","",""],["NSR_2025","break_fee_aud_m","40.000","","BK","107","Scheme Booklet 10 March 2026"],["NSR_2025","break_fee_pct_stated","","NOT_FOUND","","",""],["NSR_2025","reverse_fee_aud_m","40.000","","BK","107","Scheme Booklet 10 March 2026"],["AWC_2024","target_name","Alumina Limited","","BK","pdf 4","Scheme Booklet 11 June 2024"],["AWC_2024","target_ticker","AWC","","BK","pdf 1","Scheme Booklet 11 June 2024"],["AWC_2024","bidder_name","Alcoa Corporation","","BK","pdf 4","Scheme Booklet 11 June 2024"],["AWC_2024","structure","members_scheme","","BK","173","Scheme Booklet 11 June 2024"],["AWC_2024","consideration_type","scrip","","BK","173","Scheme Booklet 11 June 2024"],["AWC_2024","bidder_type","trade_foreign","","BK","189","Scheme Booklet 11 June 2024"],["AWC_2024","announce_date","2024-03-12","","BK","173","Scheme Booklet 11 June 2024"],["AWC_2024","outcome","implemented","","ANN","1","Implementation of Scheme 1 August 2024"],["AWC_2024","equity_value_aud_m","3353.7","DERIVED;UNIT","OTH","1","Alcoa press release 11 March 2024"],["AWC_2024","offer_value_aud","1.90","","BK","14","Scheme Booklet 11 June 2024"],["AWC_2024","special_div_aud","0","ABSENT","BK","14","Scheme Booklet 11 June 2024"],["AWC_2024","prem_ref_date","2024-02-23","","BK","325","Scheme Booklet 11 June 2024"],["AWC_2024","prem_close_pct","50.5","RANGE_MID","BK","325","Scheme Booklet 11 June 2024"],["AWC_2024","prem_1m_pct","41.0","RANGE_MID","BK","325","Scheme Booklet 11 June 2024"],["AWC_2024","prem_3m_pct","60.0","RANGE_MID","BK","325","Scheme Booklet 11 June 2024"],["AWC_2024","prem_offer_basis_aud","1.535","RANGE_MID","BK","324","Scheme Booklet 11 June 2024"],["AWC_2024","prem_source","IER","","BK","325","Scheme Booklet 11 June 2024"],["AWC_2024","ier_present","Y","","BK","173","Scheme Booklet 11 June 2024"],["AWC_2024","expert_firm","Grant Samuel & Associates Pty Limited","","BK","173","Scheme Booklet 11 June 2024"],["AWC_2024","ier_method","dcf","","BK","178","Scheme Booklet 11 June 2024"],["AWC_2024","val_low_aud","1.26","UNIT","BK","176","Scheme Booklet 11 June 2024"],["AWC_2024","val_pref_aud","","NA","","",""],["AWC_2024","val_high_aud","1.51","UNIT","BK","176","Scheme Booklet 11 June 2024"],["AWC_2024","cons_low_aud","1.45","UNIT","BK","179","Scheme Booklet 11 June 2024"],["AWC_2024","cons_high_aud","1.62","UNIT","BK","179","Scheme Booklet 11 June 2024"],["AWC_2024","opinion","FR","","BK","174","Scheme Booklet 11 June 2024"],["AWC_2024","nfr_reason","","NA","","",""],["AWC_2024","break_fee_aud_m","33.537","DERIVED;UNIT","BK","17","Scheme Booklet 11 June 2024"],["AWC_2024","break_fee_pct_stated","","NOT_FOUND","","",""],["AWC_2024","reverse_fee_aud_m","76.220","DERIVED;UNIT","BK","17","Scheme Booklet 11 June 2024"],["IFL_2025","target_name","Insignia Financial Ltd","","BK","pdf 3","Scheme Booklet 27 February 2026"],["IFL_2025","target_ticker","IFL","","BK","pdf 1","Scheme Booklet 27 February 2026"],["IFL_2025","bidder_name","CC Capital Partners LLC","","BK","89","Scheme Booklet 27 February 2026"],["IFL_2025","structure","members_scheme","","BK","89","Scheme Booklet 27 February 2026"],["IFL_2025","consideration_type","cash","","BK","89","Scheme Booklet 27 February 2026"],["IFL_2025","bidder_type","pe_infra","","BK","90","Scheme Booklet 27 February 2026"],["IFL_2025","announce_date","2025-07-22","","BK","89","Scheme Booklet 27 February 2026"],["IFL_2025","outcome","implemented","","ANN","1","Implementation of Scheme of Arrangement 28 April 2026"],["IFL_2025","equity_value_aud_m","3256.7","DERIVED","BK","7","Scheme Booklet 27 February 2026"],["IFL_2025","offer_value_aud","4.80","OTHER_CONSIDERATION","BK","7","Scheme Booklet 27 February 2026"],["IFL_2025","special_div_aud","0","","BK","89","Scheme Booklet 27 February 2026"],["IFL_2025","prem_ref_date","2024-12-11","","BK","96","Scheme Booklet 27 February 2026"],["IFL_2025","prem_close_pct","56.9","","BK","96","Scheme Booklet 27 February 2026"],["IFL_2025","prem_1m_pct","51.9","","BK","96","Scheme Booklet 27 February 2026"],["IFL_2025","prem_3m_pct","60.0","","BK","96","Scheme Booklet 27 February 2026"],["IFL_2025","prem_offer_basis_aud","4.80","","BK","96","Scheme Booklet 27 February 2026"],["IFL_2025","prem_source","IER","","BK","96","Scheme Booklet 27 February 2026"],["IFL_2025","ier_present","Y","","BK","89","Scheme Booklet 27 February 2026"],["IFL_2025","expert_firm","Kroll Australia Pty Ltd","","BK","89","Scheme Booklet 27 February 2026"],["IFL_2025","ier_method","multiple","","BK","93","Scheme Booklet 27 February 2026"],["IFL_2025","val_low_aud","4.49","","BK","92","Scheme Booklet 27 February 2026"],["IFL_2025","val_pref_aud","","NA","","",""],["IFL_2025","val_high_aud","5.08","","BK","92","Scheme Booklet 27 February 2026"],["IFL_2025","cons_low_aud","4.80","","BK","95","Scheme Booklet 27 February 2026"],["IFL_2025","cons_high_aud","4.80","","BK","95","Scheme Booklet 27 February 2026"],["IFL_2025","opinion","FR","","BK","92","Scheme Booklet 27 February 2026"],["IFL_2025","nfr_reason","","NA","","",""],["IFL_2025","break_fee_aud_m","32.600","","BK","18","Scheme Booklet 27 February 2026"],["IFL_2025","break_fee_pct_stated","","NOT_FOUND","","",""],["IFL_2025","reverse_fee_aud_m","32.600","","BK","20","Scheme Booklet 27 February 2026"],["DHG_2025","target_name","Domain Holdings Australia Limited","","BK","pdf 4","Scheme Booklet 30 June 2025"],["DHG_2025","target_ticker","DHG","","BK","37","Scheme Booklet 30 June 2025"],["DHG_2025","bidder_name","CoStar Group Inc","","BK","8","Scheme Booklet 30 June 2025"],["DHG_2025","structure","members_scheme","","BK","8","Scheme Booklet 30 June 2025"],["DHG_2025","consideration_type","cash","","BK","9","Scheme Booklet 30 June 2025"],["DHG_2025","bidder_type","trade_foreign","","BK","49","Scheme Booklet 30 June 2025"],["DHG_2025","announce_date","2025-05-09","","BK","8","Scheme Booklet 30 June 2025"],["DHG_2025","outcome","implemented","","ANN","1","Implementation of scheme of arrangement 27 August 2025"],["DHG_2025","equity_value_aud_m","2815.3","DERIVED","BK","92","Scheme Booklet 30 June 2025"],["DHG_2025","offer_value_aud","4.43","","BK","95","Scheme Booklet 30 June 2025"],["DHG_2025","special_div_aud","0.088","UNIT","ANN","1","Implementation of scheme of arrangement 27 August 2025"],["DHG_2025","prem_ref_date","2025-02-20","","BK","95","Scheme Booklet 30 June 2025"],["DHG_2025","prem_close_pct","42.0","","BK","95","Scheme Booklet 30 June 2025"],["DHG_2025","prem_1m_pct","50.2","","BK","95","Scheme Booklet 30 June 2025"],["DHG_2025","prem_3m_pct","59.7","","BK","95","Scheme Booklet 30 June 2025"],["DHG_2025","prem_offer_basis_aud","4.43","","BK","95","Scheme Booklet 30 June 2025"],["DHG_2025","prem_source","IER","","BK","95","Scheme Booklet 30 June 2025"],["DHG_2025","ier_present","Y","","BK","7","Scheme Booklet 30 June 2025"],["DHG_2025","expert_firm","Grant Samuel & Associates Pty Limited","","BK","91","Scheme Booklet 30 June 2025"],["DHG_2025","ier_method","other","","BK","135","Scheme Booklet 30 June 2025"],["DHG_2025","val_low_aud","4.06","","BK","92","Scheme Booklet 30 June 2025"],["DHG_2025","val_pref_aud","","NA","","",""],["DHG_2025","val_high_aud","4.46","","BK","92","Scheme Booklet 30 June 2025"],["DHG_2025","cons_low_aud","4.43","","BK","95","Scheme Booklet 30 June 2025"],["DHG_2025","cons_high_aud","4.43","","BK","95","Scheme Booklet 30 June 2025"],["DHG_2025","opinion","FR","","BK","92","Scheme Booklet 30 June 2025"],["DHG_2025","nfr_reason","","NA","","",""],["DHG_2025","break_fee_aud_m","28.100","","BK","72","Scheme Booklet 30 June 2025"],["DHG_2025","break_fee_pct_stated","","NOT_FOUND","","",""],["DHG_2025","reverse_fee_aud_m","28.100","","BK","73","Scheme Booklet 30 June 2025"]],"version":"0.1"};
+const SVGNS = "http://www.w3.org/2000/svg";
+const LABEL = {
+  structure: {members_scheme: "Members' scheme", trust_scheme: "Trust scheme", stapled_scheme: "Stapled scheme", takeover: "Takeover bid", dual: "Scheme and bid"},
+  consideration_type: {cash: "Cash", scrip: "Scrip", mixed: "Mixed"},
+  outcome: {implemented: "Implemented", failed_vote: "Failed vote", withdrawn: "Withdrawn", lapsed: "Lapsed", superior_bid: "Superior bid", court_refused: "Court refused", regulator_block: "Regulator blocked"},
+  position: {below: "below", in_range: "in range", above: "above", at: "at"}
+};
+const FIELD = {
+  target_name: "Target", target_ticker: "ASX code", bidder_name: "Bidder", structure: "Structure",
+  consideration_type: "Consideration", bidder_type: "Bidder type", announce_date: "Announced", outcome: "Outcome",
+  equity_value_aud_m: "Equity value (A$m)", offer_value_aud: "Final offer value (A$ per share)",
+  special_div_aud: "Special dividend (A$ per share)", prem_ref_date: "Premium reference date",
+  prem_close_pct: "Stated premium to the last close (%)", prem_1m_pct: "Stated premium to the 1-month VWAP (%)",
+  prem_3m_pct: "Stated premium to the 3-month VWAP (%)", prem_offer_basis_aud: "Offer value in the premium table (A$)",
+  prem_source: "Premium table source", ier_present: "Expert's report included", expert_firm: "Expert firm",
+  ier_method: "Expert's primary method", val_low_aud: "Expert's value, low (A$ per share)",
+  val_pref_aud: "Expert's preferred value (A$ per share)", val_high_aud: "Expert's value, high (A$ per share)",
+  cons_low_aud: "Expert's value of the consideration, low (A$)", cons_high_aud: "Expert's value of the consideration, high (A$)",
+  opinion: "Opinion", nfr_reason: "Reason for not fair but reasonable", break_fee_aud_m: "Break fee (A$m)",
+  break_fee_pct_stated: "Break fee as stated (% of equity value)", reverse_fee_aud_m: "Reverse break fee (A$m)"
+};
+const BLANK = {NOT_FOUND: "not in the documents", NA: "does not apply", AMBIG: "two figures in the documents"};
+
+function el(tag, attrs, text) {
+  const e = document.createElement(tag);
+  if (attrs) for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+function n(x) { const v = parseFloat(x); return isNaN(v) ? null : v; }
+function lab(kind, v) { return (LABEL[kind] && LABEL[kind][v]) || v; }
+function money(v) { return v === "" ? "" : "A$" + v; }
+function pageRef(c) { return c[5].indexOf("pdf") === 0 ? c[4] + " " + c[5] : c[4] + " p. " + c[5]; }
+function citesFor(id) { return DATA.cites.filter(c => c[0] === id); }
+function cite(id, field) { return DATA.cites.find(c => c[0] === id && c[1] === field); }
+function pShow(d) {
+  if (d.p !== "") return Number(d.p).toFixed(2);
+  return d.position ? lab("position", d.position) : "";
+}
+function feeShow(d) { return d.break_fee_pct_used === "" ? "none" : Number(d.break_fee_pct_used).toFixed(2); }
+
+const COLS = [
+  {k: "target", t: "Target", v: d => d.target_name, s: d => d.target_name},
+  {k: "bidder", t: "Bidder", v: d => d.bidder_name, s: d => d.bidder_name},
+  {k: "year", t: "Year", v: d => d.announce_date.slice(0, 4), s: d => d.announce_date, num: true},
+  {k: "structure", t: "Structure", v: d => lab("structure", d.structure), s: d => d.structure},
+  {k: "cons", t: "Consideration", v: d => lab("consideration_type", d.consideration_type), s: d => d.consideration_type},
+  {k: "offer", t: "Offer (A$)", v: d => d.offer_value_aud, s: d => n(d.offer_value_aud), num: true},
+  {k: "prem", t: "Premium to 1m VWAP (%)", v: d => d.prem_1m_pct, s: d => n(d.prem_1m_pct), num: true},
+  {k: "range", t: "Expert range (A$)", v: d => d.val_low_aud + " to " + d.val_high_aud, s: d => n(d.val_low_aud), num: true},
+  {k: "p", t: "p", v: pShow, s: d => n(d.p), num: true},
+  {k: "opinion", t: "Opinion", v: d => d.opinion, s: d => d.opinion},
+  {k: "fee", t: "Break fee (%)", v: feeShow, s: d => n(d.break_fee_pct_used), num: true},
+  {k: "outcome", t: "Outcome", v: d => lab("outcome", d.outcome), s: d => d.outcome}
+];
+const FILTERS = [
+  {k: "year", t: "Year", get: d => d.announce_date.slice(0, 4), show: v => v},
+  {k: "structure", t: "Structure", get: d => d.structure, show: v => lab("structure", v)},
+  {k: "consideration_type", t: "Consideration", get: d => d.consideration_type, show: v => lab("consideration_type", v)},
+  {k: "outcome", t: "Outcome", get: d => d.outcome, show: v => lab("outcome", v)}
+];
+const state = {sort: "year", dir: "asc", f: {}, open: null};
+
+function buildFilters() {
+  const box = document.getElementById("filters");
+  FILTERS.forEach(f => {
+    const l = el("label", null, f.t);
+    const s = el("select", {"data-k": f.k});
+    s.appendChild(el("option", {value: ""}, "All"));
+    [...new Set(DATA.deals.map(f.get))].sort().forEach(v => s.appendChild(el("option", {value: v}, f.show(v))));
+    s.addEventListener("change", () => { state.f[f.k] = s.value; state.open = null; renderTable(); });
+    l.appendChild(s); box.appendChild(l);
+  });
+}
+
+function citeTable(d) {
+  const wrap = el("div");
+  const t = el("table", {class: "cites"});
+  const hr = el("tr");
+  ["Field", "Value", "Document", "Page"].forEach(h => hr.appendChild(el("th", null, h)));
+  const th = el("thead"); th.appendChild(hr); t.appendChild(th);
+  const tb = el("tbody");
+  citesFor(d.deal_id).forEach(c => {
+    const r = el("tr");
+    r.appendChild(el("td", null, FIELD[c[1]] || c[1]));
+    const v = el("td");
+    const flags = c[3] ? c[3].split(";") : [];
+    const blank = flags.find(f => BLANK[f]);
+    v.appendChild(document.createTextNode(c[2] !== "" ? c[2] : (blank ? BLANK[blank] : "")));
+    const other = flags.filter(f => !BLANK[f]);
+    if (other.length) { v.appendChild(document.createTextNode(" ")); v.appendChild(el("span", {class: "flag"}, other.join(", "))); }
+    r.appendChild(v);
+    r.appendChild(el("td", null, c[6]));
+    r.appendChild(el("td", null, c[6] ? pageRef(c) : ""));
+    tb.appendChild(r);
+  });
+  t.appendChild(tb);
+  const tw = el("div", {class: "tablewrap"}); tw.appendChild(t); wrap.appendChild(tw);
+  const dv = [
+    "Derived from the cited values: consideration value compared with the range A$" + d.offer_for_p,
+    "p " + (d.p || "n/a"), "position " + lab("position", d.position),
+    "break fee % of equity value used " + (d.break_fee_pct_used || "none"),
+    "premium to the 1-month VWAP re-based to the final offer " + (d.prem_1m_rb ? d.prem_1m_rb + "%" : "n/a")
+  ];
+  wrap.appendChild(el("p", {class: "small"}, dv.join("; ") + "."));
+  return wrap;
+}
+
+function renderTable() {
+  const tbl = document.getElementById("dealtable");
+  const thead = tbl.tHead, tbody = tbl.tBodies[0];
+  thead.textContent = ""; tbody.textContent = "";
+  const hr = el("tr");
+  COLS.forEach(c => {
+    const th = el("th", {scope: "col", class: c.num ? "num" : ""});
+    const b = el("button", {type: "button"}, c.t);
+    if (state.sort === c.k) b.setAttribute("data-dir", state.dir);
+    th.setAttribute("aria-sort", state.sort === c.k ? (state.dir === "asc" ? "ascending" : "descending") : "none");
+    b.addEventListener("click", () => {
+      state.dir = state.sort === c.k && state.dir === "asc" ? "desc" : "asc";
+      state.sort = c.k; renderTable();
+    });
+    th.appendChild(b); hr.appendChild(th);
+  });
+  thead.appendChild(hr);
+  const col = COLS.find(c => c.k === state.sort);
+  let rows = DATA.deals.filter(d => FILTERS.every(f => !state.f[f.k] || f.get(d) === state.f[f.k]));
+  rows.sort((a, b) => {
+    const x = col.s(a), y = col.s(b);
+    if (x === y) return a.target_name.localeCompare(b.target_name);
+    if (x === null || x === "") return 1;
+    if (y === null || y === "") return -1;
+    const r = typeof x === "number" ? x - y : String(x).localeCompare(String(y));
+    return state.dir === "asc" ? r : -r;
+  });
+  rows.forEach(d => {
+    const tr = el("tr", {class: "deal"});
+    COLS.forEach((c, i) => {
+      const td = el("td", {class: c.num ? "num" : ""});
+      if (i === 0) {
+        const b = el("button", {type: "button", "aria-expanded": String(state.open === d.deal_id)}, c.v(d));
+        td.appendChild(b);
+      } else td.textContent = c.v(d);
+      tr.appendChild(td);
+    });
+    tr.addEventListener("click", () => { state.open = state.open === d.deal_id ? null : d.deal_id; renderTable(); });
+    tbody.appendChild(tr);
+    if (state.open === d.deal_id) {
+      const dr = el("tr", {class: "detail"});
+      const td = el("td", {colspan: String(COLS.length)});
+      td.appendChild(citeTable(d)); dr.appendChild(td); tbody.appendChild(dr);
+    }
+  });
+  const nt = new Set(rows.map(d => d.target_name)).size;
+  document.getElementById("shown").textContent = "Showing " + rows.length + " of " + DATA.deals.length + " deals (" + nt + " distinct targets).";
+}
+
+function niceStep(span, count) {
+  const raw = span / count, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  const f = raw / mag;
+  return (f < 1.5 ? 1 : f < 3 ? 2 : f < 7 ? 5 : 10) * mag;
+}
+function svg(tag, attrs, text) {
+  const e = document.createElementNS(SVGNS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+function drawField() {
+  const id = document.getElementById("ffpick").value;
+  const d = DATA.deals.find(x => x.deal_id === id);
+  const box = document.getElementById("ff");
+  box.textContent = "";
+  const lo = n(d.val_low_aud), hi = n(d.val_high_aud), pref = n(d.val_pref_aud);
+  const cl = n(d.cons_low_aud), ch = n(d.cons_high_aud), off = n(d.offer_value_aud);
+  const vals = [lo, hi, pref, cl, ch, off].filter(v => v !== null);
+  let mn = Math.min(...vals), mx = Math.max(...vals);
+  const pad = (mx - mn) * 0.12 || mx * 0.05;
+  const step = niceStep(mx - mn + 2 * pad, box.clientWidth < 520 ? 4 : 6);
+  mn = Math.floor((mn - pad) / step) * step; mx = Math.ceil((mx + pad) / step) * step;
+  const W = Math.max(300, box.clientWidth), L = 4, R = 4, top = 8, rowH = 52, H = top + rowH * 3 + 34;
+  const x = v => L + (v - mn) / (mx - mn) * (W - L - R);
+  const s = svg("svg", {viewBox: "0 0 " + W + " " + H, width: W, height: H});
+  for (let t = mn; t <= mx + step / 1000; t += step) {
+    const tx = x(t);
+    s.appendChild(svg("line", {x1: tx, x2: tx, y1: top, y2: top + rowH * 3, class: "grid"}));
+    const dec = step < 0.1 ? 2 : step < 1 ? 1 : 0;
+    const anchor = t <= mn + step / 1000 ? "start" : t >= mx - step / 1000 ? "end" : "middle";
+    s.appendChild(svg("text", {x: tx, y: top + rowH * 3 + 18, "text-anchor": anchor, class: "tick"}, "A$" + t.toFixed(dec)));
+  }
+  s.appendChild(svg("line", {x1: L, x2: W - R, y1: top + rowH * 3, y2: top + rowH * 3, class: "base"}));
+  const name = d.target_name;
+  function row(i, label, a, b, color, tip) {
+    const y0 = top + i * rowH;
+    s.appendChild(svg("text", {x: L, y: y0 + 16, class: "rowlab"}, label));
+    const g = svg("g", {tabindex: "0"});
+    const xa = x(a), xb = x(b), w = Math.max(4, xb - xa), xs = xb - xa < 4 ? (xa + xb) / 2 - 2 : xa;
+    g.appendChild(svg("rect", {x: xs - 6, y: y0 + 20, width: w + 12, height: 26, fill: "transparent"}));
+    g.appendChild(svg("rect", {x: xs, y: y0 + 26, width: w, height: 14, rx: 3, fill: color}));
+    g.appendChild(svg("title", {}, tip));
+    s.appendChild(g);
+    return y0;
+  }
+  const r1 = "A$" + d.val_low_aud + " to A$" + d.val_high_aud + (pref !== null ? ", preferred A$" + d.val_pref_aud : "");
+  const y1 = row(0, "Target, expert's value: " + r1, lo, hi, "var(--s1)", "Expert's value of the target: " + r1);
+  if (pref !== null) {
+    s.appendChild(svg("line", {x1: x(pref), x2: x(pref), y1: y1 + 22, y2: y1 + 44, stroke: "var(--ink)", "stroke-width": 2}));
+  }
+  const r2 = cl === ch ? "A$" + d.cons_low_aud : "A$" + d.cons_low_aud + " to A$" + d.cons_high_aud;
+  row(1, "Consideration, expert's value: " + r2, cl, ch, "var(--s2)", "Expert's value of the consideration: " + r2);
+  const y3 = top + 2 * rowH;
+  s.appendChild(svg("text", {x: L, y: y3 + 16, class: "rowlab"}, "Final offer: A$" + d.offer_value_aud));
+  const g = svg("g", {tabindex: "0"});
+  g.appendChild(svg("circle", {cx: x(off), cy: y3 + 33, r: 12, fill: "transparent"}));
+  g.appendChild(svg("circle", {cx: x(off), cy: y3 + 33, r: 5, fill: "var(--ink)", stroke: "var(--surface)", "stroke-width": 2}));
+  g.appendChild(svg("title", {}, "Final offer: A$" + d.offer_value_aud));
+  s.appendChild(g);
+  box.appendChild(s);
+  box.setAttribute("aria-label", "Football field for " + name + ". Expert's value " + r1 + ". Consideration " + r2 + ". Final offer A$" + d.offer_value_aud + ".");
+  const ul = document.getElementById("ffcites");
+  ul.textContent = "";
+  ["val_low_aud", "val_pref_aud", "val_high_aud", "cons_low_aud", "cons_high_aud", "offer_value_aud", "opinion"].forEach(f => {
+    const c = cite(id, f);
+    if (!c || c[2] === "") return;
+    ul.appendChild(el("li", null, FIELD[f] + ": " + c[2] + (c[3] ? " (" + c[3].split(";").join(", ") + ")" : "") + ". " + c[6] + ", " + pageRef(c) + "."));
+  });
+  ul.appendChild(el("li", {class: "small"}, "p = " + (d.p || "n/a") + "; position: " + lab("position", d.position) + " (derived)."));
+}
+
+function buildPicker() {
+  const s = document.getElementById("ffpick");
+  [...DATA.deals].sort((a, b) => a.target_name.localeCompare(b.target_name))
+    .forEach(d => s.appendChild(el("option", {value: d.deal_id}, d.target_name + " (" + d.announce_date.slice(0, 4) + ")")));
+  s.addEventListener("change", drawField);
+  let t; window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(drawField, 150); });
+}
+
+function download() {
+  const head = ["deal_id", "field", "value", "flag", "doc_code", "page", "doc_title"];
+  const q = v => /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
+  const lines = [head.join(",")].concat(DATA.cites.map(r => r.map(q).join(",")));
+  const blob = new Blob([lines.join("\n") + "\n"], {type: "text/csv"});
+  const a = el("a", {href: URL.createObjectURL(blob), download: "fair-and-reasonable-v" + DATA.version + ".csv"});
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+buildFilters();
+renderTable();
+buildPicker();
+drawField();
+document.getElementById("download").addEventListener("click", download);
+</script>
+</body>
+</html>
